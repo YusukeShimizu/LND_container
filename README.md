@@ -5,13 +5,15 @@
 git clone git@github.com:YusukeShimizu/LND_container.git
 cd LND_container
 docker-compose up -d
+```
+
+You need to unlock wallet on container.
+
+```
 docker exec -i -t lnd_btc bash
 lncli create
 Input wallet password: 
 Confirm password:
-```
-You need to unlock wallet on container.
-```
 Do you have an existing cipher seed mnemonic you want to use? (Enter y/n): n
 
 Your cipher seed can optionally be encrypted.

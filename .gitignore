@@ -1,0 +1,9 @@
+vendor
+*.idea
+*.iml
+profile.cov
+profile.tmp
+
+.DS_Store
+
+.vscode

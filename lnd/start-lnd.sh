@@ -54,6 +54,10 @@ exec lnd \
     "--$CHAIN.active" \
     "--$CHAIN.$NETWORK" \
     "--$CHAIN.node"="btcd" \
+    --rpclisten="0.0.0.0:10009" \
+    --restlisten="0.0.0.0:8080" \
+    --tlsextraip="0.0.0.0" \
+    --tlsextradomain="0.0.0.0" \
     "--$BACKEND.rpccert"="/rpc/rpc.cert" \
     "--$BACKEND.rpchost"="blockchain" \
     "--$BACKEND.rpcuser"="$RPCUSER" \

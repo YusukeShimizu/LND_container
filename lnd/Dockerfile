@@ -19,7 +19,13 @@ RUN apk add --no-cache --update alpine-sdk \
     make \
     &&  cd /go/src/github.com/lightningnetwork/lnd \
     &&  make \
-    &&  make install tags="signrpc walletrpc chainrpc invoicesrpc routerrpc"
+    &&  make install tags="monitoring signrpc walletrpc chainrpc invoicesrpc routerrpc"
+
+
+ENV CGO_ENABLED=1
+ENV CC=gcc
+RUN go get -u github.com/cloudflare/cfssl/cmd/cfssl
+RUN go get -u github.com/cloudflare/cfssl/cmd/cfssljson
 
 # Start a new, final image to reduce size.
 FROM alpine as final
@@ -30,6 +36,8 @@ EXPOSE 9735 10009
 # Copy the binaries and entrypoint from the builder image.
 COPY --from=builder /go/bin/lncli /bin/
 COPY --from=builder /go/bin/lnd /bin/
+COPY --from=builder /go/bin/cfssl /bin/
+COPY --from=builder /go/bin/cfssljson /bin/
 
 # Add bash.
 RUN apk add --no-cache \

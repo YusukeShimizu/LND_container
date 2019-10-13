@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: lnd-btcd-i
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: lnd-btcd-s
+          servicePort: 9735

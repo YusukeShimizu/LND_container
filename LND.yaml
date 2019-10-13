@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: lnd-btcd
+  labels:
+    name: lnd-btcd
+spec:
+  selector:
+    matchLabels:
+      app: lnd-btcd # Label selector that determines which Pods belong to the StatefulSet
+                 # Must match spec: template: metadata: labels
+  serviceName: "lnd-btcd"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lnd-btcd # Pod template's label selector
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: btcd
+        image: gcr.io/<projectID>/btcd:latest
+        command:
+        - ./start-btcd.sh
+        env:
+        - name: DEBUG
+        - name: MINING_ADDRESS
+        - name: NETWORK
+        - name: RPCPASS
+        - name: RPCUSER
+        volumeMounts:
+        - mountPath: /rpc
+          name: lndcontainer-shared
+        - mountPath: /data
+          name: lndcontainer-bitcoin
+      - name: lnd
+        image: gcr.io/<projectID>/lnd:latest
+        command:
+        - ./start-lnd.sh
+        env:
+        - name: CHAIN
+        - name: DEBUG
+        - name: NETWORK
+        - name: RPCPASS
+        - name: RPCUSER
+        volumeMounts:
+        - mountPath: /rpc
+          name: lndcontainer-shared
+        - mountPath: /root/.lnd
+          name: lnd-storage
+        ports:
+        - containerPort: 9735
+        - containerPort: 8080
+  volumeClaimTemplates:
+  - metadata:
+      name: lndcontainer-bitcoin
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+  - metadata:
+      name: lndcontainer-shared
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+  - metadata:
+      name: lnd-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+          

@@ -4,9 +4,6 @@ metadata:
   name: lnd-btcd-s
 spec:
   ports:
-  - name: http
-    port: 8080
-    targetPort: 8080
   - name: peer
     port: 9735
     targetPort: 9735

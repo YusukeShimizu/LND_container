@@ -55,11 +55,8 @@ exec lnd \
     "--$CHAIN.$NETWORK" \
     "--$CHAIN.node"="btcd" \
     --rpclisten="0.0.0.0:10009" \
-    --restlisten="0.0.0.0:8080" \
-    --tlsextraip="0.0.0.0" \
-    --tlsextradomain="0.0.0.0" \
+    --listen="0.0.0.0:9735" \
     "--$BACKEND.rpccert"="/rpc/rpc.cert" \
-    "--$BACKEND.rpchost"="blockchain" \
     "--$BACKEND.rpcuser"="$RPCUSER" \
     "--$BACKEND.rpcpass"="$RPCPASS" \
     --debuglevel="$DEBUG" \

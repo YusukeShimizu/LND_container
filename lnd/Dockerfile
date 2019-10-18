@@ -31,7 +31,7 @@ RUN go get -u github.com/cloudflare/cfssl/cmd/cfssljson
 FROM alpine as final
 
 # Expose lnd ports (server, rpc).
-EXPOSE 9735 10009
+EXPOSE 9735
 
 # Copy the binaries and entrypoint from the builder image.
 COPY --from=builder /go/bin/lncli /bin/

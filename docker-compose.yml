@@ -19,22 +19,6 @@ services:
         - MINING_ADDRESS
       entrypoint: ["./start-btcd.sh"]
 
-    btcctl: 
-      image: btcd
-      build:
-        context: btcd/
-      container_name: btcctl
-      environment:
-        - RPCUSER
-        - RPCPASS
-        - NETWORK
-      volumes:
-        - shared:/rpc
-        - bitcoin:/data
-      links:
-        - "btcd:rpcserver"
-      entrypoint: ["./start-btcctl.sh"]
-
     lnd-btc:
         image: lnd
         build:

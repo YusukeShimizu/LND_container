@@ -19,7 +19,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: btcd
-        image: gcr.io/<projectID>/btcd:latest
+        image: gcr.io/kouzoh-p-bruwbird/btcd:latest
         command:
         - ./start-btcd.sh
         env:
@@ -34,7 +34,7 @@ spec:
         - mountPath: /data
           name: lndcontainer-bitcoin
       - name: lnd
-        image: gcr.io/<projectID>/lnd:latest
+        image: gcr.io/kouzoh-p-bruwbird/lnd:latest
         command:
         - ./start-lnd.sh
         env:
@@ -50,7 +50,6 @@ spec:
           name: lnd-storage
         ports:
         - containerPort: 9735
-        - containerPort: 8080
   volumeClaimTemplates:
   - metadata:
       name: lndcontainer-bitcoin

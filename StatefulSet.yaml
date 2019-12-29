@@ -19,30 +19,24 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: btcd
+        envFrom:
+        - secretRef:
+            name: lnd-secret
         image: gcr.io/kouzoh-p-bruwbird/btcd:latest
         command:
         - ./start-btcd.sh
-        env:
-        - name: DEBUG
-        - name: MINING_ADDRESS
-        - name: NETWORK
-        - name: RPCPASS
-        - name: RPCUSER
         volumeMounts:
         - mountPath: /rpc
           name: lndcontainer-shared
         - mountPath: /data
           name: lndcontainer-bitcoin
       - name: lnd
+        envFrom:
+        - secretRef:
+            name: lnd-secret
         image: gcr.io/kouzoh-p-bruwbird/lnd:latest
         command:
         - ./start-lnd.sh
-        env:
-        - name: CHAIN
-        - name: DEBUG
-        - name: NETWORK
-        - name: RPCPASS
-        - name: RPCUSER
         volumeMounts:
         - mountPath: /rpc
           name: lndcontainer-shared
@@ -50,6 +44,8 @@ spec:
           name: lnd-storage
         ports:
         - containerPort: 9735
+        - containerPort: 10009
+        - containerPort: 8989
   volumeClaimTemplates:
   - metadata:
       name: lndcontainer-bitcoin
@@ -57,7 +53,7 @@ spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 1Gi
+          storage: 500Gi
   - metadata:
       name: lndcontainer-shared
     spec:

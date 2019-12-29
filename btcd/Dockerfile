@@ -33,7 +33,6 @@ COPY --from=builder /go/bin/btcd /bin/
 COPY --from=builder /go/bin/findcheckpoint /bin/
 COPY --from=builder /go/bin/gencerts /bin/
 
-COPY "start-btcctl.sh" .
 COPY "start-btcd.sh" .
 
 RUN apk add --no-cache \
@@ -41,7 +40,6 @@ RUN apk add --no-cache \
     ca-certificates \
     &&  mkdir "/rpc" "/root/.btcd" "/root/.btcctl" \
     &&  touch "/root/.btcd/btcd.conf" \
-    &&  chmod +x start-btcctl.sh \
     &&  chmod +x start-btcd.sh \
     # Manually generate certificate and add all domains, it is needed to connect
     # "btcctl" and "lnd" to "btcd" over docker links.

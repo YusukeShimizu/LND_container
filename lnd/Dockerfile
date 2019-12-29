@@ -45,4 +45,7 @@ RUN apk add --no-cache \
 
 # Copy the entrypoint script.
 COPY "start-lnd.sh" .
+COPY ./server.json .
+COPY ./config.json .
+
 RUN chmod +x start-lnd.sh

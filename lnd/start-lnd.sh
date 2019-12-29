@@ -56,6 +56,9 @@ exec lnd \
     "--$CHAIN.node"="btcd" \
     --rpclisten="0.0.0.0:10009" \
     --listen="0.0.0.0:9735" \
+    --prometheus.enable \
+    --prometheus.listen="0.0.0.0:8989" \
+    --tlsextraip="0.0.0.0" \
     "--$BACKEND.rpccert"="/rpc/rpc.cert" \
     "--$BACKEND.rpcuser"="$RPCUSER" \
     "--$BACKEND.rpcpass"="$RPCPASS" \

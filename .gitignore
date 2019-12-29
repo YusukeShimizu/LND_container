@@ -3,7 +3,7 @@ vendor
 *.iml
 profile.cov
 profile.tmp
-
+.env
 .DS_Store
 
 .vscode
